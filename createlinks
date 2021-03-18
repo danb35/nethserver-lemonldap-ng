@@ -11,7 +11,7 @@ event_templates('nethserver-lemonldap-ng-update', qw(
 		/root/lemon_config.sh
 ));
 
-event_actions('nethserver-lemonldap-ngs-update', qw(
+event_actions('nethserver-lemonldap-ng-update', qw(
 		initialize-default-databases 00
 		runlevel-adjust 10'
 ));

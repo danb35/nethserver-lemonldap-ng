@@ -1,7 +1,7 @@
 Summary: NethServer configuration for LemonLDAP::NG
 %define name nethserver-lemonldap-ng
 %define version 0.1.0
-%define release 1
+%define release 2
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -42,5 +42,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Thu Mar 18 2021 Dan Brown <dan@familybrown.org> 0.1.0-2.ns7
+- Fixed error in createlinks
+
 * Thu Mar 18 2021 Dan Brown <dan@familybrown.org> 0.1.0-1.ns7
 - Initial Release
