@@ -36,8 +36,8 @@ my $key = (${lemonldap}{KeyFile} && (-e ${lemonldap}{KeyFile})) ? ${lemonldap}{K
     # result (example: /oauth2/checksession.html) as static file. Then
     # uncomment the following line.
     # RewriteCond "%{REQUEST_URI}" "!\.html(?:/.*)?$"
-    RewriteCond "%{REQUEST_URI}" "!^/(?:(?:static|javascript|favicon).*|.*\.fcgi(?:/.*)?)$"
-    RewriteRule "^/(.+)$" "/index.fcgi/$1" [PT]
+    RewriteCond "%{REQUEST_URI}" "!^/(?:(?:static|javascript|favicon).*|.*\.fcgi(?:/.*)?)\$"
+    RewriteRule "^/(.+)\$" "/index.fcgi/\$1" [PT]
 
     # Uncomment this to mitigate memory leaks when using Perl 5.16
     # FcgidMaxRequestsPerProcess 500
@@ -112,7 +112,7 @@ my $key = (${lemonldap}{KeyFile} && (-e ${lemonldap}{KeyFile})) ? ${lemonldap}{K
                 BrowserMatch ^Mozilla/4 gzip-only-text/html
                 BrowserMatch ^Mozilla/4\.0[678] no-gzip
                 BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
-                SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+                SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)\$ no-gzip dont-vary
         </IfModule>
         <IfModule mod_headers.c>
                 Header append Vary User-Agent env=!dont-vary

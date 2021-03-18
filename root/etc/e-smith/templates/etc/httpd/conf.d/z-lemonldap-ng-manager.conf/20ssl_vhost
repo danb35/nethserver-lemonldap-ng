@@ -39,11 +39,11 @@ my $key = (${lemonldap}{KeyFile} && (-e ${lemonldap}{KeyFile})) ? ${lemonldap}{K
     # (configuration, sessions, notifications) as manager.html, sessions.html,
     # notifications.html and uncomment the 2 following lines:
     # DirectoryIndex manager.html
-    # RewriteCond "%{REQUEST_URI}" "!\.html(?:/.*)?$"
+    # RewriteCond "%{REQUEST_URI}" "!\.html(?:/.*)?\$"
 
     # REST URLs
     RewriteCond "%{REQUEST_URI}" "!^/(?:static|doc|lib|javascript|favicon).*"
-    RewriteRule "^/(.+)$" "/manager.fcgi/$1" [PT]
+    RewriteRule "^/(.+)\$" "/manager.fcgi/\$1" [PT]
 
     # 2) FastCGI engine
 
@@ -73,7 +73,7 @@ my $key = (${lemonldap}{KeyFile} && (-e ${lemonldap}{KeyFile})) ? ${lemonldap}{K
             BrowserMatch ^Mozilla/4 gzip-only-text/html
             BrowserMatch ^Mozilla/4\.0[678] no-gzip
             BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
-            SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+            SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)\$ no-gzip dont-vary
         </IfModule>
         <IfModule mod_headers.c>
             Header append Vary User-Agent env=!dont-vary

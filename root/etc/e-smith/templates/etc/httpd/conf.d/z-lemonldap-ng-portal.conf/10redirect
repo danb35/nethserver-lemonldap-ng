@@ -22,7 +22,7 @@ $OUT .=<<__EOF__
                 Options None
                 AllowOverride None
                 ForceType text/plain
-                RedirectMatch 404 "^(?!/\.well-known/acme-challenge/[\w-]{43}$)"
+                RedirectMatch 404 "^(?!/\.well-known/acme-challenge/[\w-]{43}\$)"
                 Require method GET POST OPTIONS
         </Directory>
 
