@@ -9,7 +9,7 @@ if (${sssd}{Provider} eq "ad") {
 	$OUT .=<<__EOF__
 # Configure for Active Directory server
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
-	authentication \"Active Directory\" \\
+	authentication \"AD\" \\
 	managerDn \"$bindDN\" \\
 	ldapBase \"$baseDN\" \\
 	ldapVerify \"optional\" \\
