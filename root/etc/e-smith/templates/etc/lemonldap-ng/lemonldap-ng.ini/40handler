@@ -3,13 +3,13 @@
 ; Handler cache configuration
 ; You can overwrite here local session cache settings in manager:
 ;          localSessionStorage=Cache::FileCache
-;          localSessionStorageOptions={                         \
+;          localSessionStorageOptions=\{                         \
 ;              'namespace'          => 'lemonldap-ng-sessions', \
 ;              'default_expires_in' => 600,                     \
 ;              'directory_umask'    => '007',                   \
 ;              'cache_root'         => '/var/cache/lemonldap-ng',          \
 ;              'cache_depth'        => 3,                       \
-;          }
+;          \}
 
 ; Set https to 1 if your handler protect a https website (used only for
 ; redirections to the portal)

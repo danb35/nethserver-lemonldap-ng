@@ -30,8 +30,8 @@
 ;         You have to set 'baseUrl' parameter. Example:
 ;
 ;           type         = REST
-;           baseUrl	 = https://auth.familybrown.org/config
-;           proxyOptions = { timeout => 5 }
+;           baseUrl	 = https://auth.$DomainName/config
+;           proxyOptions = \{ timeout => 5 \}
 ;           User         = lemonldap
 ;           Password     = mypassword
 ;
@@ -41,8 +41,8 @@
 ;         You have to set 'proxy' parameter. Example:
 ;
 ;           type         = SOAP
-;           proxy        = https://auth.familybrown.org/config
-;           proxyOptions = { timeout => 5 }
+;           proxy        = https://auth.$DomainName/config
+;           proxyOptions = \{ timeout => 5 \}
 ;           User         = lemonldap
 ;           Password     = mypassword
 ;
@@ -68,18 +68,18 @@ prettyPrint = 1
 ; to choose a Cache::Cache module and set its parameters. Example:
 ;
 ;           localStorage = Cache::FileCache
-;           localStorageOptions={                             \
+;           localStorageOptions=\{                             \
 ;               'namespace'          => 'lemonldap-ng-config',\
 ;               'default_expires_in' => 600,                  \
 ;               'directory_umask'    => '007',                \
 ;               'cache_root'         => '/var/cache/lemonldap-ng',	 \
 ;               'cache_depth'        => 3,                    \
-;           }
+;           \}
 localStorage=Cache::FileCache
-localStorageOptions={                             \
+localStorageOptions=\{                             \
     'namespace'          => 'lemonldap-ng-config',\
     'default_expires_in' => 600,                  \
     'directory_umask'    => '007',                \
     'cache_root'         => '/var/cache/lemonldap-ng',       \
     'cache_depth'        => 3,                    \
-}
+\}
