@@ -1,10 +1,24 @@
 {
 
-my $cert = (${lemonldap}{CrtFile} && (-e ${lemonldap}{CrtFile})) ? ${lemonldap}{CrtFile} : ${pki}{CrtFile};
-my $chain = (${lemonldap}{ChainFile} && (-e ${lemonldap}{ChainFile})) ? ${lemonldap}{ChainFile} : ${pki}{ChainFile};
-my $key = (${lemonldap}{KeyFile} && (-e ${lemonldap}{KeyFile})) ? ${lemonldap}{KeyFile} : ${pki}{KeyFile};
+if (${lemonldap}{CrtFile}) {
+	$cert = ${lemonldap}{CrtFile};
+} elsif (${pki}{CrtFile}) {
+	$cert = ${pki}{CrtFile};
+} else $cert = "/etc/pki/tls/certs/localhost.crt";
 
- $OUT .= <<__EOF__
+if (${lemonldap}{KeyFile}) {
+	$key = ${lemonldap}{KeyFile};
+} elsif (${pki}{KeyFile}) {
+	$key = ${pki}{KeyFile};
+} else $key = "/etc/pki/tls/private/localhost.key";
+
+if (${lemonldap}{ChainFile}) {
+	$chain = "SSLCertificateChainFile " . ${lemonldap}{ChainFile};
+} elsif (${pki}{ChainFile}) {
+	$chain = "SSLCertificateChainFile " . ${pki}{ChainFile};
+} else $chain = "#SSLCertificateChainFile";
+
+$OUT .= <<__EOF__
 
 <VirtualHost *:443 [::]:443>
     ServerName $managerfqdn
@@ -16,7 +30,7 @@ my $key = (${lemonldap}{KeyFile} && (-e ${lemonldap}{KeyFile})) ? ${lemonldap}{K
     SSLEngine on
     # For example with certbot (you need a certificate to run https)
     SSLCertificateFile $cert
-    SSLCertificateChainFile $chain
+    $chain
     SSLCertificateKeyFile $key
 
     # Uncomment this if you are running behind a reverse proxy and want

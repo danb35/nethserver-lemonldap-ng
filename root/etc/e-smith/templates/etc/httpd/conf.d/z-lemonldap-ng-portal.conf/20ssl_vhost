@@ -1,8 +1,22 @@
 {
 
-my $cert = (${lemonldap}{CrtFile} && (-e ${lemonldap}{CrtFile})) ? ${lemonldap}{CrtFile} : ${pki}{CrtFile};
-my $chain = (${lemonldap}{ChainFile} && (-e ${lemonldap}{ChainFile})) ? ${lemonldap}{ChainFile} : ${pki}{ChainFile};
-my $key = (${lemonldap}{KeyFile} && (-e ${lemonldap}{KeyFile})) ? ${lemonldap}{KeyFile} : ${pki}{KeyFile};
+if (${lemonldap}{CrtFile}) {
+	$cert = ${lemonldap}{CrtFile};
+} elsif (${pki}{CrtFile}) {
+	$cert = ${pki}{CrtFile};
+} else $cert = "/etc/pki/tls/certs/localhost.crt";
+
+if (${lemonldap}{KeyFile}) {
+	$key = ${lemonldap}{KeyFile};
+} elsif (${pki}{KeyFile}) {
+	$key = ${pki}{KeyFile};
+} else $key = "/etc/pki/tls/private/localhost.key";
+
+if (${lemonldap}{ChainFile}) {
+	$chain = "SSLCertificateChainFile " . ${lemonldap}{ChainFile};
+} elsif (${pki}{ChainFile}) {
+	$chain = "SSLCertificateChainFile " . ${pki}{ChainFile};
+} else $chain = "#SSLCertificateChainFile";
 
  $OUT .= <<__EOF__
 
