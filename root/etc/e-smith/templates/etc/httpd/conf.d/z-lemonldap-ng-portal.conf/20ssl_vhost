@@ -4,19 +4,25 @@ if (${lemonldap}{CrtFile}) {
 	$cert = ${lemonldap}{CrtFile};
 } elsif (${pki}{CrtFile}) {
 	$cert = ${pki}{CrtFile};
-} else $cert = "/etc/pki/tls/certs/localhost.crt";
+} else {
+        $cert = "/etc/pki/tls/certs/localhost.crt";
+}
 
 if (${lemonldap}{KeyFile}) {
 	$key = ${lemonldap}{KeyFile};
 } elsif (${pki}{KeyFile}) {
 	$key = ${pki}{KeyFile};
-} else $key = "/etc/pki/tls/private/localhost.key";
+} else {
+        $key = "/etc/pki/tls/private/localhost.key";
+}
 
 if (${lemonldap}{ChainFile}) {
 	$chain = "SSLCertificateChainFile " . ${lemonldap}{ChainFile};
 } elsif (${pki}{ChainFile}) {
 	$chain = "SSLCertificateChainFile " . ${pki}{ChainFile};
-} else $chain = "#SSLCertificateChainFile";
+} else {
+        $chain = "#SSLCertificateChainFile";
+}
 
  $OUT .= <<__EOF__
 
@@ -28,7 +34,7 @@ if (${lemonldap}{ChainFile}) {
     SSLEngine on
     # For example with certbot (you need a certificate to run https)
     SSLCertificateFile $cert
-    SSLCertificateChainFile $chain
+    $chain
     SSLCertificateKeyFile $key
 
     # Uncomment this if you are running behind a reverse proxy and want
