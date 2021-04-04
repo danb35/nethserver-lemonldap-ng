@@ -33,6 +33,7 @@ __EOF__
 	}
 
 $OUT .=<<__EOF__
+# 10ldap
 # Set Manager access rules
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey \\
 	\"locationRules/$managerfqdn\" default \'\$uid eq \"admin\"\' \\

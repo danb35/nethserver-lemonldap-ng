@@ -7,6 +7,7 @@ if (${sssd}{Provider} eq "ad") {
 	my $bindPassword = $sssd->bindPassword();
 	my $ldapURI = $sssd->ldapURI();
 	$OUT .=<<__EOF__
+# 20activedirectory
 # Configure for Active Directory server
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
 	authentication \"AD\" \\

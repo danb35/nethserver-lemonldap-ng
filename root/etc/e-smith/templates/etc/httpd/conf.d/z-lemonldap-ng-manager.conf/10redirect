@@ -6,6 +6,7 @@ if (${lemonldap}{managerFqdn}) {
 }
 
 $OUT.=<<__EOF__
+# 10redirect
 # Manager virtual host ($managerfqdn)
 <VirtualHost *:80 [::]:80>
         ServerName $managerfqdn

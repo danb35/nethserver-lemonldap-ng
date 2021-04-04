@@ -12,6 +12,7 @@ if (${lemonldap}{managerFqdn}) {
 }
 
 $OUT .=<<__EOF__
+# 05general
 # Replace FQDNs in LLNG config file
 sed -i "s/auth\.example\.com/$portalfqdn/g" /var/lib/lemonldap-ng/conf/lmConf-1.json
 sed -i "s/manager\.example\.com/$managerfqdn/g" /var/lib/lemonldap-ng/conf/lmConf-1.json

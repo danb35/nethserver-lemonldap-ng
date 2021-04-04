@@ -1,3 +1,4 @@
+; 20configuration
 [configuration]
 
 ; confTimeout: maximum time to get configuration (default 10)

@@ -6,6 +6,7 @@ if (${lemonldap}{portalFqdn}) {
 }
 
 $OUT .=<<__EOF__
+# 10redirect
 # Portal virtual host ($portalfqdn)
 <VirtualHost *:80 [::]:80>
         ServerName $portalfqdn

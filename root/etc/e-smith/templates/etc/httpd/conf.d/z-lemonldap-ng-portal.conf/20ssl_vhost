@@ -26,6 +26,7 @@ if (${lemonldap}{ChainFile}) {
 
  $OUT .= <<__EOF__
 
+# 20ssl_vhost
 <VirtualHost *:443 [::]:443>
     ServerName $portalfqdn
     # See above to set LLNG user id in Apache logs
