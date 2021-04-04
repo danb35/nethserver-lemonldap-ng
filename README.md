@@ -30,6 +30,7 @@ You'll also need to install the GPG key: `curl https://lemonldap-ng.org/_media/r
 Now run `yum install nethserver-lemonldap-ng --enablerepo=lemonldap-ng,lemonldap-ng-extras`.  Yum will install LemonLDAP::NG and all its dependencies, along with the integration package.
 
 ## Post-install configuration
+**Caution:** LemonLDAP::NG **will not work** without additional configuration.  The `root/lemon_config.sh` script (described below) will set up sensible defaults for most Nethserver systems.  If you want your own custom configuration, consult the [LLNG docs](https://lemonldap-ng.org/documentation/latest/installrpm.html#first-configuration-steps).  At a minimum, you'll need to run `sed -i 's/example\.com/yourdomain/g' /var/lib/lemonldap-ng/conf/lmConf-1.json`.
 
 ### Host names
 By default, the authentication portal will be available at https://auth.yourdomain, and the manager at https://manager.yourdomain.  You can change these defaults using the `portalFqdn` and `managerFqdn` properties, respectively.
