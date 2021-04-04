@@ -27,7 +27,7 @@ You'll also need to install the GPG key: `curl https://lemonldap-ng.org/_media/r
 
 ## Install
 
-Now run `yum install nethserver-lemonldap-ng`.  Yum will install LemonLDAP::NG and all its dependencies, along with the integration package.
+Now run `yum install nethserver-lemonldap-ng --enablerepo=lemonldap-ng,lemonldap-ng-extras`.  Yum will install LemonLDAP::NG and all its dependencies, along with the integration package.
 
 ## Post-install configuration
 
