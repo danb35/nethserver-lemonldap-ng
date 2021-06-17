@@ -6,6 +6,8 @@ use esmith::Build::CreateLinks qw(:all);
 
 event_templates('nethserver-lemonldap-ng-update', qw(
 		/etc/lemonldap-ng/lemonldap-ng.ini
+                /etc/httpd/conf.d/z-lemonldap-ng-api.conf
+                /etc/httpd/conf.d/z-lemonldap-ng-handler.conf
 		/etc/httpd/conf.d/z-lemonldap-ng-manager.conf
 		/etc/httpd/conf.d/z-lemonldap-ng-portal.conf
 		/root/lemon_config.sh
