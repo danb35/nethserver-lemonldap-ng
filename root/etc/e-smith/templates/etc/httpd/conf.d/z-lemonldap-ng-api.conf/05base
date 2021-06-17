@@ -1,3 +1,6 @@
+{
+$OUT.=<<__EOF__
+#05base
 #===========================================
 # Apache configuration for LemonLDAP::NG API
 #===========================================
@@ -96,4 +99,7 @@
     # Uncomment this if site if you use SSL only
     #Header set Strict-Transport-Security "max-age=15768000"
 </VirtualHost>
+
+__EOF__
+}
 
