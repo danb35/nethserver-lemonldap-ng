@@ -1,0 +1,50 @@
+#========================================================================
+# Apache configuration for LemonLDAP::NG Handler
+#========================================================================
+# This file implements the reload virtualhost that permits to reload
+# configuration without restarting server, and some common instructions.
+# You need then to declare this vhost in reloadUrls (in the manager
+# interface if this server doesn't host the manager itself):
+#
+#         KEY       :               VALUE
+#   host-or-IP:port :  http://reload.$DomainName/reload
+#
+# IMPORTANT:
+# To protect applications, see test-apache.conf template in example files
+
+# Load LemonLDAP::NG Handler
+PerlOptions +GlobalRequest
+PerlModule Lemonldap::NG::Handler::ApacheMP2
+
+# Common error page and security parameters
+ErrorDocument 403 http://auth.$DomainName/lmerror/403
+ErrorDocument 404 http://auth.$DomainName/lmerror/404
+ErrorDocument 500 http://auth.$DomainName/lmerror/500
+ErrorDocument 502 http://auth.$DomainName/lmerror/502
+ErrorDocument 503 http://auth.$DomainName/lmerror/503
+
+<VirtualHost "*:80">
+    ServerName reload.$DomainName
+
+    # Configuration reload mechanism (only 1 per physical server is
+    # needed): choose your URL to avoid restarting Apache when
+    # configuration change
+    <Location /reload>
+        Require ip 127 ::1
+        SetHandler perl-script
+        PerlResponseHandler Lemonldap::NG::Handler::ApacheMP2->reload
+    </Location>
+
+    # Uncomment this to activate status module
+    #<Location /status>
+    #    Require ip 127 ::1
+    #    SetHandler perl-script
+    #    PerlResponseHandler Lemonldap::NG::Handler::ApacheMP2->status
+    #    # You may have to uncomment the next directive to skip
+    #    # an upper PerlHeaderParserHandler directive
+    #    #PerlHeaderParserHandler Apache2::Const::DECLINED
+    #</Location>
+
+    # Uncomment this if site if you use SSL only
+    #Header set Strict-Transport-Security "max-age=15768000"
+</VirtualHost>

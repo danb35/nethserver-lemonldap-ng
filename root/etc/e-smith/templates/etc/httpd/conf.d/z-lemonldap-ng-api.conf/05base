@@ -1,0 +1,99 @@
+#===========================================
+# Apache configuration for LemonLDAP::NG API
+#===========================================
+
+# Uncomment this if no previous NameVirtualHost declaration
+#NameVirtualHost "*:80"
+
+# To insert LLNG user id in Apache logs, declare this format and use it in
+# CustomLog directive
+#LogFormat "%v:%p %h %l %{Lm-Remote-User}o %t \"%r\" %>s %O %{Lm-Remote-Custom}o" llng
+
+# Manager virtual host (manager.$DomainName)
+<VirtualHost "*:80">
+    ServerName manager-api.$DomainName
+    LogLevel notice
+    # See above to set LLNG user id in Apache logs
+    #CustomLog /var/log/httpd/manager-api.log llng
+    #ErrorLog /var/log/httpd/lm_err.log
+
+    # Uncomment this if you are running behind a reverse proxy and want
+    # LemonLDAP::NG to see the real IP address of the end user
+    # Adjust the settings to match the IP address of your reverse proxy
+    # and the header containing the original IP address
+    #
+    #RemoteIPHeader X-Forwarded-For
+    #RemoteIPInternalProxy 127.0.0.1
+
+
+    # FASTCGI CONFIGURATION
+    # ---------------------
+
+    # 1) URI management
+    RewriteEngine on
+
+    # For performances, you can delete the previous RewriteRule line after
+    # puttings html files: simply put the HTML results of differents modules
+    # (configuration, sessions, notifications) as manager.html, sessions.html,
+    # notifications.html and uncomment the 2 following lines:
+    # DirectoryIndex manager.html
+    # RewriteCond "%{REQUEST_URI}" "!\.html(?:/.*)?$"
+
+    # REST URLs
+    RewriteCond "%{REQUEST_URI}" "!^/(?:doc)"
+    RewriteRule "^/(.+)$" "/api.fcgi/$1" [PT]
+
+    # 2) FastCGI engine
+
+    # You can choose any FastCGI system. Here is an example using mod_fcgid
+    # mod_fcgid configuration
+    FcgidMaxRequestLen 2000000
+    <Files *.fcgi>
+        SetHandler fcgid-script
+        Options +ExecCGI
+        header unset Lm-Remote-User
+    </Files>
+
+    # If you want to use mod_fastcgi, replace lines below by:
+    #FastCgiServer /usr/share/lemonldap-ng/manager/api//api.fcgi
+
+    # GLOBAL CONFIGURATION
+    # --------------------
+
+    DocumentRoot /usr/share/lemonldap-ng/manager/api/
+
+    <Location />
+
+        # By default, access to this VHost is denied
+        # If you want to enable the manager APIs, you MUST
+        # implement a robust authentication scheme to protect this
+        # VHost since LemonLDAP::NG provides no protection to the
+        # Manager APIs yet
+        Require all denied
+
+        <IfModule mod_deflate.c>
+            AddOutputFilterByType DEFLATE text/html text/plain text/xml text/javascript text/css
+            SetOutputFilter DEFLATE
+            BrowserMatch ^Mozilla/4 gzip-only-text/html
+            BrowserMatch ^Mozilla/4\.0[678] no-gzip
+            BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+            SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+        </IfModule>
+        <IfModule mod_headers.c>
+            Header append Vary User-Agent env=!dont-vary
+        </IfModule>
+    </Location>
+
+    # On-line documentation
+    Alias /doc/ /usr/share/lemonldap-ng/doc/
+    <Directory /usr/share/lemonldap-ng/doc/>
+        Require all granted
+        ErrorDocument 404 /notfound.html
+        Options +FollowSymLinks
+        DirectoryIndex index.html start.html
+    </Directory>
+
+    # Uncomment this if site if you use SSL only
+    #Header set Strict-Transport-Security "max-age=15768000"
+</VirtualHost>
+

@@ -1,7 +1,7 @@
 Summary: NethServer configuration for LemonLDAP::NG
 %define name nethserver-lemonldap-ng
 %define version 0.1.0
-%define release 4
+%define release 5
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -42,6 +42,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Thu Jun 17 2021 Dan Brown <dan@familybrown.org> 0.1.0-5.ns7
+- Template z-lemonldap-ng-api.conf and z-lemonldap-ng-handler.conf
+
 * Sun Apr  4 2021 Dan Brown <dan@familybrown.org> 0.1.0-4.ns7
 - Correct template expansion
 - Reload httpd on completion of lemon_config.sh
