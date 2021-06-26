@@ -18,8 +18,8 @@ $OUT.=<<__EOF__
         RewriteCond %{HTTPS} off
         RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-        Alias /.well-known/acme-challenge/ /var/www/certbot/
-        <Directory /var/www/certbot>
+        Alias /.well-known/acme-challenge/ /var/www/html/.well-known/acme-challenge/
+        <Directory /var/www/html/.well-known/acme-challenge/>
                 Options None
                 AllowOverride None
                 ForceType text/plain
