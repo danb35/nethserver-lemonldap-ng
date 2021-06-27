@@ -21,6 +21,10 @@ sed -i "s/example\.com/$DomainName/g" /var/lib/lemonldap-ng/conf/lmConf-1.json
 # Remove sample applications from portal menu
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
 	applicationList 1sample
+/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
+	\"locationRules/\" \"test1.$DomainName\"
+/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
+	\"locationRules/\" \"test2.$DomainName\"
 
 # Set portal to use HTTPS URLs, secure cookies
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
