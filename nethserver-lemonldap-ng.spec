@@ -1,7 +1,7 @@
 Summary: NethServer configuration for LemonLDAP::NG
 %define name nethserver-lemonldap-ng
-%define version 0.1.0
-%define release 8
+%define version 0.2.0
+%define release 1
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -42,6 +42,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sun Jun 27 2021 Dan Brown <dan@familybrown.org> 0.2.0-1.ns7
+- Include Nethserver branding
+- Support for Active Directory authentication
+
 * Sat Jun 26 2021 Dan Brown <dan@familybrown.org> 0.1.0-8.ns7
 - Fix virtual host redirect for ACME HTTP validation
 

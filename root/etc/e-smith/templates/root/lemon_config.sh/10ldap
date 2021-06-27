@@ -8,9 +8,11 @@ if (${sssd}{Provider} eq "ldap") {
 			$uri =~ s/ldap:/ldap+tls:/g
 		}
 		$OUT .=<<__EOF__
+# 10ldap
 # Configure for remote LDAP server
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
 	authentication \"LDAP\" \\
+	passwordDB \"LDAP\" \\
 	ldapBase \"${sssd}{BaseDN}\" \\
 	ldapVerify \"optional\" \\
 	ldapServer \"$uri\"
@@ -19,27 +21,38 @@ __EOF__
 	}
 	else {
 		# Using local OpenLDAP
+		use NethServer::SSSD; 
+		my $sssd = new NethServer::SSSD();
+		my $baseDN = $sssd->baseDN();
+		my $bindDN = $sssd->bindDN();
+		my $bindPassword = $sssd->bindPassword();
+		my $ldapURI = $sssd->ldapURI();
+		my $groupDN = $sssd->groupDN();
 		$OUT .=<<__EOF__
+# 10ldap
 # Configure for local OpenLDAP server
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
 	authentication \"LDAP\" \\
-	managerDn \"cn=ldapservice,dc=directory,dc=nh\" \\
-	ldapBase \"dc=directory,dc=nh\" \\
-	ldapVerify \"optional\" \\
+	passwordDB \"LDAP\" \\
+	userDB \"Same\" \\
+	registerDB \"Null\" \\
+	ldapServer \"$ldapURI\" \\
+	ldapVerify \"none\" \\
+	ldapBase \"$baseDN\" \\
+	managerDn \"$bindDN\" \\
 	managerPassword \"\$(cat /var/lib/nethserver/secrets/ldapservice)\" \\
-	ldapServer \"$uri\"
+	ldapGroupBase \"$groupDN\" \\
+	ldapGroupObjectClass \"posixGroup\"
 
 __EOF__
 	}
-
 $OUT .=<<__EOF__
-# 10ldap
 # Set Manager access rules
+/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
+	\"locationRules/\" \"$managerfqdn\"
+
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey \\
-	\"locationRules/$managerfqdn\" default \'\$uid eq \"admin\"\' \\
-	\"locationRules/$managerfqdn\" \"(\?#Sessions)/(.*\?\\.(fcgi|psgi)/)\?sessions\" \'\$uid eq \"admin\"\' \\
-	\"locationRules/$managerfqdn\" \"(\?#Notifications)/(.*\?\\.(fcgi|psgi)/)?notifications\" \'\$uid eq \"admin\"\' \\
-	\"locationRules/$managerfqdn\" \"(\?#Configuration)^/(.*\?\\.(fcgi|psgi)/)?(manager\\.html|confs/|\$)\" \'\$uid eq \"admin\"\'
+	\"locationRules/$managerfqdn\" default \'\$uid eq \"admin\"\'
 
 __EOF__
 }

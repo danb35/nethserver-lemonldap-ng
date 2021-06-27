@@ -6,23 +6,30 @@ if (${sssd}{Provider} eq "ad") {
 	my $bindDN = $sssd->bindDN();
 	my $bindPassword = $sssd->bindPassword();
 	my $ldapURI = $sssd->ldapURI();
+	my $groupDN = $sssd->groupDN();
 	$OUT .=<<__EOF__
 # 20activedirectory
 # Configure for Active Directory server
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
 	authentication \"AD\" \\
-	managerDn \"$bindDN\" \\
+	passwordDB \"AD\" \\
+	userDB \"Same\" \\
+	registerDB \"Null\" \\
+	ldapServer \"$ldapURI\" \\
+	ldapVerify \"none\" \\
 	ldapBase \"$baseDN\" \\
-	ldapVerify \"optional\" \\
+	managerDn \"$bindDN\" \\
 	managerPassword \"$bindPassword" \\
-	ldapServer \"$ldapURI\"
+	ldapGroupBase \"$groupDN\" \\
+	ldapGroupObjectClass \"group\" \\
+	ldapGroupDecodeSearchedValue 1
 
 # Set Manager access rules
+/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
+	\"locationRules/\" \"$managerfqdn\"
+
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey \\
-	\"locationRules/$managerfqdn\" default \'inGroup (\"domain admins\")\' \\
-	\"locationRules/$managerfqdn\" \"(\?#Sessions)/(.*\?\\.(fcgi|psgi)/)\?sessions\" \'inGroup (\"domain admins\")\' \\
-	\"locationRules/$managerfqdn\" \"(\?#Notifications)/(.*\?\\.(fcgi|psgi)/)?notifications\" \'inGroup (\"domain admins\")\' \\
-	\"locationRules/$managerfqdn\" \"(\?#Configuration)^/(.*\?\\.(fcgi|psgi)/)?(manager\\.html|confs/|\$)\" \'inGroup (\"domain admins\")\'
+	\"locationRules/$managerfqdn\" default \'inGroup(\"domain admins\")\'
 
 __EOF__
 	}

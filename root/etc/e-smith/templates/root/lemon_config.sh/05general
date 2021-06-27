@@ -29,7 +29,10 @@ sed -i "s/example\.com/$DomainName/g" /var/lib/lemonldap-ng/conf/lmConf-1.json
 	https 1 \\
 	registerUrl "https://$portalfqdn/register" \\
 	certificateResetByMailURL "https://$portalfqdn/certificateReset" \\
-	mailUrl "https://$portalfqdn/resetpwd"
+	mailUrl "https://$portalfqdn/resetpwd" \\
+	portalMainLogo "common/logos/nethserver.png" \\
+	portalSkinBackground "nethbackground.png"
 
 __EOF__
 }
+
