@@ -1,7 +1,7 @@
 Summary: NethServer configuration for LemonLDAP::NG
 %define name nethserver-lemonldap-ng
 %define version 0.2.0
-%define release 2
+%define release 3
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -42,6 +42,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Mon Jun 28 2021 Dan Brown <dan@familybrown.org> 0.2.0-2.ns7
+- Fix background for logo
+
 * Mon Jun 28 2021 Dan Brown <dan@familybrown.org> 0.2.0-2.ns7
 - Add support for remote LDAP authentication
 
