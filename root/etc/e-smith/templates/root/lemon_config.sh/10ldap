@@ -4,18 +4,31 @@ if (${sssd}{Provider} eq "ldap") {
 	$uri = ${sssd}{LdapURI};
 	if (${sssd}{BaseDN}) {
 		# Using remote LDAP
-		if (${sssd}{StartTLS} eq "enabled") {
+		if (${sssd}{StartTls} eq "enabled") {
 			$uri =~ s/ldap:/ldap+tls:/g
 		}
+		use NethServer::SSSD; 
+		my $sssd = new NethServer::SSSD();
+		my $baseDN = $sssd->baseDN();
+		my $bindDN = $sssd->bindDN();
+		my $bindPassword = $sssd->bindPassword();
+		my $ldapURI = $sssd->ldapURI();
+		my $groupDN = $sssd->groupDN();
 		$OUT .=<<__EOF__
 # 10ldap
 # Configure for remote LDAP server
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
 	authentication \"LDAP\" \\
 	passwordDB \"LDAP\" \\
-	ldapBase \"${sssd}{BaseDN}\" \\
-	ldapVerify \"optional\" \\
-	ldapServer \"$uri\"
+	userDB \"Same\" \\
+	registerDB \"Null\" \\
+	ldapServer \"$uri\" \\
+	ldapVerify \"none\" \\
+	ldapBase \"$baseDN\" \\
+	managerDn \"$bindDN\" \\
+	managerPassword \"$bindPassword\" \\
+	ldapGroupBase \"$groupDN\" \\
+	ldapGroupObjectClass \"posixGroup\"
 
 __EOF__
 	}
@@ -57,3 +70,4 @@ $OUT .=<<__EOF__
 __EOF__
 }
 }
+
