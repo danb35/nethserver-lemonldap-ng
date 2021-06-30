@@ -27,6 +27,7 @@ sed -i "s/example\.com/$DomainName/g" /var/lib/lemonldap-ng/conf/lmConf-1.json
 	\"locationRules/\" \"test2.$DomainName\"
 
 # Set portal to use HTTPS URLs, secure cookies
+# Also add Nethserver imaging, remove register button
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
 	portal "https://$portalfqdn" \\
 	securedCookie 1 \\
@@ -36,7 +37,8 @@ sed -i "s/example\.com/$DomainName/g" /var/lib/lemonldap-ng/conf/lmConf-1.json
 	mailUrl "https://$portalfqdn/resetpwd" \\
 	portalMainLogo "common/logos/nethserver.png" \\
 	portalSkinBackground "nethbackground.png" \\
-	portalCustomCss "bootstrap/css/custom.css"
+	portalCustomCss "bootstrap/css/custom.css" \\
+	portalDisplayRegister 0
 
 __EOF__
 }
