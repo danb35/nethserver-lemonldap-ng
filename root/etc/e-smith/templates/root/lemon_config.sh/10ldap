@@ -28,7 +28,10 @@ if (${sssd}{Provider} eq "ldap") {
 	managerDn \"$bindDN\" \\
 	managerPassword \"$bindPassword\" \\
 	ldapGroupBase \"$groupDN\" \\
-	ldapGroupObjectClass \"posixGroup\"
+	ldapGroupObjectClass \"posixGroup\" \\
+	ldapExportedVars uid uid \\
+	ldapExportedVars cn cn \\
+	ldapExportedVars mail Email
 
 __EOF__
 	}
@@ -55,7 +58,10 @@ __EOF__
 	managerDn \"$bindDN\" \\
 	managerPassword \"\$(cat /var/lib/nethserver/secrets/ldapservice)\" \\
 	ldapGroupBase \"$groupDN\" \\
-	ldapGroupObjectClass \"posixGroup\"
+	ldapGroupObjectClass \"posixGroup\" \\
+        ldapExportedVars uid uid \\
+        ldapExportedVars cn cn \\
+        ldapExportedVars mail Email
 
 __EOF__
 	}

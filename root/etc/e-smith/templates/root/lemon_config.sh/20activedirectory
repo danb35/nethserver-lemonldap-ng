@@ -22,7 +22,10 @@ if (${sssd}{Provider} eq "ad") {
 	managerPassword \"$bindPassword" \\
 	ldapGroupBase \"$groupDN\" \\
 	ldapGroupObjectClass \"group\" \\
-	ldapGroupDecodeSearchedValue 1
+	ldapGroupDecodeSearchedValue 1 \\
+	ldapExportedVars cn displayName \\
+	ldapExportedVars mail userPrincipalName \\
+	ldapExportedVars uid sAMAccountName
 
 # Set Manager access rules
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
