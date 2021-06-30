@@ -42,11 +42,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
-* Tue Jun 29 2021 Dan Brown <dan@familybrown.org> 0.2.0-3.ns7
+* Tue Jun 29 2021 Dan Brown <dan@familybrown.org> 0.2.0-4.ns7
 - Configure some uniform exported LDAP variables
 - Shrink login page logo
 
-* Mon Jun 28 2021 Dan Brown <dan@familybrown.org> 0.2.0-2.ns7
+* Mon Jun 28 2021 Dan Brown <dan@familybrown.org> 0.2.0-3.ns7
 - Fix background for logo
 
 * Mon Jun 28 2021 Dan Brown <dan@familybrown.org> 0.2.0-2.ns7
