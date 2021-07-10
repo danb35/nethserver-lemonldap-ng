@@ -1,7 +1,7 @@
 Summary: NethServer configuration for LemonLDAP::NG
 %define name nethserver-lemonldap-ng
 %define version 0.2.0
-%define release 5
+%define release 6
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -42,6 +42,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Sat Jul 10 2021 Dan Brown <dan@familybrown.org> 0.2.0-6.ns7
+- Properly set exported vars
+
 * Wed Jun 30 2021 Dan Brown <dan@familybrown.org> 0.2.0-5.ns7
 - Remove Register button
 - Really shrink Nethserver logo

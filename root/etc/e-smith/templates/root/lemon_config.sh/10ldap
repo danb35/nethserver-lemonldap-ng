@@ -28,7 +28,8 @@ if (${sssd}{Provider} eq "ldap") {
 	managerDn \"$bindDN\" \\
 	managerPassword \"$bindPassword\" \\
 	ldapGroupBase \"$groupDN\" \\
-	ldapGroupObjectClass \"posixGroup\" \\
+	ldapGroupObjectClass \"posixGroup\"
+/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey \\
 	ldapExportedVars uid uid \\
 	ldapExportedVars cn cn \\
 	ldapExportedVars mail Email
