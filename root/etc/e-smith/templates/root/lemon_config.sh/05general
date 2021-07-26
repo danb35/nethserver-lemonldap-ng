@@ -26,6 +26,13 @@ sed -i "s/example\.com/$DomainName/g" /var/lib/lemonldap-ng/conf/lmConf-1.json
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
 	\"locationRules/\" \"test2.$DomainName\"
 
+# Check for cfgDate property and add if missing
+# See https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2566
+if ! grep cfgDate /var/lib/lemonldap-ng/conf/lmConf-1.json; then
+  echo "Adding cfgDate property to lmConf-1.json"
+  sed -i \"88 a \\\"cfgDate\\\": \\\"\$( date +%s )\\\",\" /var/lib/lemonldap-ng/conf/lmConf-1.json
+fi
+
 # Set portal to use HTTPS URLs, secure cookies
 # Also add Nethserver imaging, remove register button
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
