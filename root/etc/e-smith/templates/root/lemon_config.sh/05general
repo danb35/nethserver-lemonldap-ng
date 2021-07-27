@@ -18,6 +18,21 @@ sed -i "s/auth\.example\.com/$portalfqdn/g" /var/lib/lemonldap-ng/conf/lmConf-1.
 sed -i "s/manager\.example\.com/$managerfqdn/g" /var/lib/lemonldap-ng/conf/lmConf-1.json
 sed -i "s/example\.com/$DomainName/g" /var/lib/lemonldap-ng/conf/lmConf-1.json
 
+# Check if LLNG configuration has already been changed
+if [ -e /var/lib/lemonldap-ng/conf/lmConf-2.json ]; then
+  response = ""
+  echo "WARNING: This script is intended to be used only for initial"
+  echo "configuration of LemonLDAP::NG.  Continuing may undo prior"
+  echo "configuration changes and result in unexpected operation."
+  read -p "Continue (y/N)?" response
+  shopt -s nocasematch
+  if [[ \$response != "Y" ]]; then
+    echo "Exiting."
+        exit 1
+  fi
+  shopt -u nocasematch
+fi
+
 # Remove sample applications from portal menu
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
 	applicationList 1sample
