@@ -29,6 +29,7 @@ if (${sssd}{Provider} eq "ldap") {
 	managerPassword \"$bindPassword\" \\
 	ldapGroupBase \"$groupDN\" \\
 	ldapGroupObjectClass \"posixGroup\"
+
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey \\
 	ldapExportedVars uid uid \\
 	ldapExportedVars cn cn \\
@@ -59,7 +60,9 @@ __EOF__
 	managerDn \"$bindDN\" \\
 	managerPassword \"\$(cat /var/lib/nethserver/secrets/ldapservice)\" \\
 	ldapGroupBase \"$groupDN\" \\
-	ldapGroupObjectClass \"posixGroup\" \\
+	ldapGroupObjectClass \"posixGroup\"
+
+/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 addKey \\
         ldapExportedVars uid uid \\
         ldapExportedVars cn cn \\
         ldapExportedVars mail Email

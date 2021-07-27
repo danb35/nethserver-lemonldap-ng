@@ -1,7 +1,7 @@
 Summary: NethServer configuration for LemonLDAP::NG
 %define name nethserver-lemonldap-ng
 %define version 0.2.2
-%define release 1
+%define release 2
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -42,6 +42,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Tue Jul 27 2021 Dan Brown <dan@familybrown.org> 0.2.2-2.ns7
+- Fix exported vars for local OpenLDAP
+
 * Tue Jul 27 2021 Dan Brown <dan@familybrown.org> 0.2.2-1.ns7
 - Warn on re-running lemon_config.sh
 
