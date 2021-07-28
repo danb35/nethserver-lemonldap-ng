@@ -33,20 +33,20 @@ if [ -e /var/lib/lemonldap-ng/conf/lmConf-2.json ]; then
   shopt -u nocasematch
 fi
 
-# Remove sample applications from portal menu
-/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
-	applicationList 1sample
-/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
-	\"locationRules/\" \"test1.$DomainName\"
-/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
-	\"locationRules/\" \"test2.$DomainName\"
-
 # Check for cfgDate property and add if missing
 # See https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/2566
-if ! grep cfgDate /var/lib/lemonldap-ng/conf/lmConf-1.json; then
+if ! grep -q cfgDate /var/lib/lemonldap-ng/conf/lmConf-1.json; then
   echo "Adding cfgDate property to lmConf-1.json"
   sed -i \"88 a \\\"cfgDate\\\": \\\"\$( date +%s )\\\",\" /var/lib/lemonldap-ng/conf/lmConf-1.json
 fi
+
+# Remove sample applications from portal menu
+/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
+        applicationList 1sample
+/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
+        \"locationRules/\" \"test1.$DomainName\"
+/usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 delKey \\
+        \"locationRules/\" \"test2.$DomainName\"
 
 # Set portal to use HTTPS URLs, secure cookies
 # Also add Nethserver imaging, remove register button
