@@ -1,7 +1,7 @@
 Summary: NethServer configuration for LemonLDAP::NG
 %define name nethserver-lemonldap-ng
-%define version 0.2.2
-%define release 3
+%define version 0.2.3
+%define release 1
 Name: %{name}
 Version: %{version}
 Release: %{release}%{?dist}
@@ -42,6 +42,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_nseventsdir}/%{name}-update
 
 %changelog
+* Wed Aug  4 2021 Dan Brown <dan@familybrown.org> 0.2.3-1.ns7
+- Allow IP-based access restriction on manager
+
 * Wed Jul 28 2021 Dan Brown <dan@familybrown.org> 0.2.2-3.ns7
 - Moved cfgDate check
 

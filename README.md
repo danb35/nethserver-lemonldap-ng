@@ -42,10 +42,11 @@ By default, the portal and manager virtual hosts will use the default system TLS
 Unlike most configuration in Nethserver, the main configuration file for LemonLDAP::NG is not templated.  Most changes will be done directly through its web interface (https://manager.yourdomain).  However, this package provides a script that will create a basic configuration.  That script will be created or updated any time you run `signal-event nethserver-lemonldap-ng-update`.  Then, to run it, run `/root/lemon_config.sh`.  This script will set the portal to enforce SSL on your domain, require secure cookies, remove the test applications, and connect to your accounts provider as configured in Nethserver.
 
 ## Configuration properties
-Configuration for this module is stored in the main configuration database, under the `lemonldap` key.  Available properties are:
+Configuration for this module is stored in the main configuration database, under the `lemonldap` key.  After making any changes, run `signal-event nethserver-lemonldap-ng-update`.  Available properties are:
 
 |Property|Default|Description|
 |---|---|---|
+|access|public|Control access to the WebSSO manager.  If set to `private`, access will only be allowed from private networks.|
 |portalFqdn|auth.$DomainName|FQDN where the authentication portal will be visible|
 |managerFqdn|manager.$DomainName|FQDN where the manager will be visible|
 |CrtFile|(system default)|Path to TLS certificate for the portal and manager virtual hosts|

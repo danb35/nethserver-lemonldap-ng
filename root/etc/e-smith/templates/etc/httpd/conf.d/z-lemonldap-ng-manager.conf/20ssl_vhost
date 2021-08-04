@@ -24,10 +24,10 @@ if (${lemonldap}{ChainFile}) {
         $chain = "#SSLCertificateChainFile";
 }
 
-$OUT .= <<__EOF__
+$OUT .= <<__EOF1__;
 
 # 20ssl_vhost
-<VirtualHost *:443 [::]:443>
+<VirtualHost *:443>
     ServerName $managerfqdn
     LogLevel notice
     # See above to set LLNG user id in Apache logs
@@ -86,7 +86,24 @@ $OUT .= <<__EOF__
     DocumentRoot /usr/share/lemonldap-ng/manager/htdocs/
 
     <Location />
-        Require all granted
+__EOF1__
+my $llngaccess = ${lemonldap}{access} || "public";
+if ($llngaccess eq 'private') {
+       use esmith::NetworksDB; 
+       my $networksDb = esmith::NetworksDB->open_ro() || return '';
+       my $localNetworks = join ' ', map {
+           my $u = $_;
+           $u =~ s:/255\.255\.255\.255::g;
+           $u;
+         } $networksDb->local_access_spec;
+       my $PrivateAllow = $localNetworks || '';
+       my $access = join(" \\\n        ", split(' ', $PrivateAllow));
+       $OUT .= "        Require ip $access\n";
+     } else {
+       $OUT .= "        Require all granted\n";
+}
+
+$OUT .= <<__EOF2__;
 
         <IfModule mod_deflate.c>
             AddOutputFilterByType DEFLATE text/html text/plain text/xml text/javascript text/css
@@ -122,5 +139,6 @@ $OUT .= <<__EOF__
     # Uncomment this if site if you use SSL only
     #Header set Strict-Transport-Security "max-age=15768000"
 </VirtualHost>
-__EOF__
+__EOF2__
 }
+
