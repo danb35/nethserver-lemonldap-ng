@@ -3,6 +3,10 @@
 
 This package provides basic integration of LemonLDAP::NG into Nethserver, setting up the necessary Apache virtual hosts, configuring them for your domain, and configuring LemonLDAP::NG to connect to your specified accounts provider.  Further manual configuration will be required to allow it to protect any application you're interested in.
 
+## Quick install
+You can install and configure this module with a single command, which will handle the items in Prep, Install, and Post-install configuration below.  Specifically, it will run the `/root/lemon_config.sh` script with all the default settings.  If you don't want this to happen, follow the steps below instead.  To perform the quick install, run:
+`curl https://raw.githubusercontent.com/danb35/nethserver-lemonldap-ng/master/install-llng.sh | sh`
+
 ## Prep
 
 Install the danb35 repo: `yum install https://repo.familybrown.org/nethserver/7/noarch/nethserver-danb35-1.1.0-1.ns7.noarch.rpm`
@@ -30,7 +34,7 @@ You'll also need to install the GPG key: `curl https://lemonldap-ng.org/_media/r
 Now run `yum install nethserver-lemonldap-ng --enablerepo=lemonldap-ng,lemonldap-ng-extras`.  Yum will install LemonLDAP::NG and all its dependencies, along with the integration package.
 
 ## Post-install configuration
-**Caution:** LemonLDAP::NG **will not work** without additional configuration.  The `root/lemon_config.sh` script (described below) will set up sensible defaults for most Nethserver systems.  If you want your own custom configuration, consult the [LLNG docs](https://lemonldap-ng.org/documentation/latest/installrpm.html#first-configuration-steps).  At a minimum, you'll need to run `sed -i 's/example\.com/yourdomain/g' /var/lib/lemonldap-ng/conf/lmConf-1.json`.
+**Caution:** LemonLDAP::NG **will not work** without additional configuration.  The `/root/lemon_config.sh` script (described below) will set up sensible defaults for most Nethserver systems.  If you want your own custom configuration, consult the [LLNG docs](https://lemonldap-ng.org/documentation/latest/installrpm.html#first-configuration-steps).  At a minimum, you'll need to run `sed -i 's/example\.com/yourdomain/g' /var/lib/lemonldap-ng/conf/lmConf-1.json`.
 
 ### Host names
 By default, the authentication portal will be available at https://auth.yourdomain, and the manager at https://manager.yourdomain.  You can change these defaults using the `portalFqdn` and `managerFqdn` properties, respectively.
