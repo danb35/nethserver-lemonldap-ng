@@ -51,7 +51,7 @@ fi
 # Set portal to use HTTPS URLs, secure cookies
 # Also add Nethserver imaging, remove register button
 /usr/libexec/lemonldap-ng/bin/lemonldap-ng-cli -yes 1 set \\
-	portal "https://$portalfqdn" \\
+	portal "https://$portalfqdn/" \\
 	securedCookie 1 \\
 	https 1 \\
 	registerUrl "https://$portalfqdn/register" \\
